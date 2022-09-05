@@ -28,7 +28,14 @@ var UserSchema = new mongoose_1["default"].Schema({
     isAdmin: {
         type: Boolean,
         "default": false
-    }
+    },
+    googleId: {
+        type: String
+    },
+    isVerified: {
+        type: Boolean
+    },
+    emailToken: { String: String }
 }, { timestamps: true });
 exports["default"] = mongoose_1["default"].model("User", UserSchema);
 //# sourceMappingURL=User.js.map

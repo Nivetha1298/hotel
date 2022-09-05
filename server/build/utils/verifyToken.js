@@ -87,30 +87,23 @@ exports.verifyUser = verifyUser;
 var verifyAdmin = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         (0, exports.verifyToken)(req, res, function () { return __awaiter(void 0, void 0, void 0, function () {
-            var isadmin, _id, userdata;
+            var isadmin;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log(req.params.id);
-                        isadmin = req.headers.isadmin;
-                        if (!isadmin) return [3 /*break*/, 3];
-                        _id = JSON.parse(isadmin)._id;
-                        return [4 /*yield*/, User_1["default"].findById(_id)];
-                    case 1: return [4 /*yield*/, (_a.sent())];
-                    case 2:
-                        userdata = _a.sent();
-                        console.log("userdata", userdata);
-                        if (userdata._id === req.params.id || userdata.isAdmin) {
-                            next();
-                        }
-                        else {
-                            return [2 /*return*/, res.json("You are not authorized!")];
-                        }
-                        _a.label = 3;
-                    case 3:
-                        console.log("admin", isadmin);
-                        return [2 /*return*/];
+                console.log(req.params.id);
+                isadmin = req.headers.isadmin;
+                if (isadmin) {
+                    next();
                 }
+                else {
+                    return [2 /*return*/, res.json("You are not authorized!")];
+                }
+                // if(isadmin){
+                //   const _id = JSON.parse(isadmin)._id
+                //   const userdata= await (await User.findById(_id))
+                //   console.log("userdata" ,userdata);
+                // }
+                console.log("admin", isadmin);
+                return [2 /*return*/];
             });
         }); });
         return [2 /*return*/];

@@ -6,5 +6,6 @@ var auth_1 = require("../controllers/auth");
 var router = express.Router();
 router.post("/register", auth_1.register);
 router.post("/login", auth_1.login);
+router.post("/googleLogin", auth_1.GoogleSignIn);
 exports["default"] = router;
 //# sourceMappingURL=auth.js.map

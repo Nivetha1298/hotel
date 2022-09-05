@@ -23,9 +23,12 @@ export  const createHotel = async (req:Request,res:Response,next)=>{
 // Update a hotel
 export  const updateHotel = async (req:Request,res:Response,next)=>{
     try{
-        console.log(req.body)
+        const currentHotel = await Hotel.findById(req.params.id)
+        console.log("update",currentHotel)
+        // console.log(req.body)
         const updateHotel = await Hotel.findByIdAndUpdate(req.params.id  ,{$set:req.body} , {new:true})
         res.status(200).json(updateHotel)
+
     
        }
        catch(err){
