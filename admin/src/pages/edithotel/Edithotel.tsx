@@ -23,6 +23,7 @@ const NewHotel = () => {
   const { data, loading, error } = useFetch(`http://localhost:8005/api/${path}/${currentId.data}`);
   console.log(data)
 
+  const [isFile,setIsFile] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +44,7 @@ const NewHotel = () => {
   
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    setIsFile(false)
   };
 
 
@@ -52,29 +54,38 @@ const NewHotel = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const list = await Promise.all(
-        Object.values(files).map(async (file) => {
-          const data = new FormData();
-           // @ts-expect-error
-          data.append("file", file);
-          data.append("upload_preset", "qqwgak9b");
-          const uploadRes = await axios.put(
-            "https://api.cloudinary.com/v1_1/dyhxtfvnd/image/upload",
-            data
-          );
-
-          const { url } = uploadRes.data;
-          return url;
-        })
-      );
-
-      const newhotel = {
-        ...info,
-        rooms,
-        photos: list,
-      };
-
-      await axios.put(`http://localhost:8005/api/${path}/${currentId.data}`, newhotel  ,{headers:{isAdmin:localStorage.getItem(`user`)}} );
+      if(!isFile){
+        const list = await Promise.all(
+          Object.values(files).map(async (file) => {
+            const data = new FormData();
+             // @ts-expect-error
+            data.append("file", file);
+            data.append("upload_preset", "qqwgak9b");
+            const uploadRes = await axios.put(
+              "https://api.cloudinary.com/v1_1/dyhxtfvnd/image/upload",
+              data
+            );
+  
+            const { url } = uploadRes.data;
+            return url;
+          })
+        );
+  
+        const newhotel = {
+          ...info,
+          rooms,
+          photos: list,
+        };
+  
+        await axios.put(`http://localhost:8005/api/${path}/${currentId.data}`, newhotel  ,{headers:{isAdmin:localStorage.getItem(`user`)}} );
+      }else{
+        const newhotel = {
+          ...info,
+          rooms,
+        };
+  
+       await axios.put(`http://localhost:8005/api/${path}/${currentId.data}`, newhotel  ,{headers:{isAdmin:localStorage.getItem(`user`)}} );
+      }
     } catch (err) {console.log(err)}
     navigate("/hotels")
 
@@ -89,6 +100,12 @@ const NewHotel = () => {
     );
     setRooms(value);
   };
+  const fileUpload =(e)=>{
+    if(e.target.files){
+      setFiles(e.target.files)
+      setIsFile(true)
+    }
+  }
   return (
     <div className="new">
       <Sidebar />
@@ -118,8 +135,7 @@ const NewHotel = () => {
                   type="file"
                   id="file"
                   multiple
-                   // @ts-expect-error
-                  onChange={(e) => setFiles(e.target.files)}
+                  onChange={(e) =>fileUpload(e)}
                   style={{ display: "none" }}
                 />
               </div>
