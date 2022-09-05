@@ -7,7 +7,9 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import userEvent from "@testing-library/user-event";
 
 
 
@@ -37,12 +39,29 @@ console.log(url)
         ...info,
         img: url,
       };
+      
 
-      await axios.post("http://localhost:8005/api/auth/register", newUser   , {headers:{isAdmin:localStorage.getItem(`user`)}});
+        const res = await axios.post("http://localhost:8005/api/auth/register", newUser   , {headers:{isAdmin:localStorage.getItem(`user`)}});
+        console.log(res);
+        if(res.data.isexist){
+          toast.error(res.data.message)
+          return
+        }
+               
+
+        // toast(res.data.message)
+        // if(!res.data.isVerified)
+        // {
+        //   toast("lololA")
+        // }
+
     } catch (err) {
-      console.log(err);
+      
+     toast(err.response.data.message);
+     console.log(err.response.data);
+     
     }
-   navigate("/login");
+ 
   };
 
   console.log(info);

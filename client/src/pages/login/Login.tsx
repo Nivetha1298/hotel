@@ -87,7 +87,7 @@ const  clientId="727656018338-83p9tgi0c15s2vo06p9esv7t1uld72b7.apps.googleuserco
   })
   return (
     <div className="login">
-    {  showLoginButton ?<GoogleLogin
+    {  showLoginButton ?<GoogleLogin   className='google'
     clientId={ clientId}
     buttonText="Login"
     onSuccess={onLoginSuccess}
@@ -95,7 +95,7 @@ const  clientId="727656018338-83p9tgi0c15s2vo06p9esv7t1uld72b7.apps.googleuserco
     cookiePolicy={'single_host_origin'}
   />: loading}
 {showLogoutButton?
-<GoogleLogout
+<GoogleLogout    className='google'
       clientId={ clientId}
       buttonText="Logout"
       onLogoutSuccess={onLogout}

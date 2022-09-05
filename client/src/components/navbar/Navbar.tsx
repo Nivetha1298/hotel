@@ -22,9 +22,14 @@ const logout =()=>{
        {user ?  `${user?.result?.googleId ?user?.result?.username:user.username}`:<Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
           <span className="logo">Hotel booking</span>
         </Link>}
-        <img src={user  && `${user?.result?.googleId ?user?.result?.img:user.img}`}/>
+        <img   className="avatar" src={user  && `${user?.result?.googleId ?user?.result?.img:user.img}`}/>
+
+
+
+
+
       <div className="move">
-        {user ? `${user?.result?.phone ?user?.result?.username:user.username}` &&<LogoutIcon onClick={() => {
+        {user ? `${user?.result?.phone ?user?.result.username:user.username}` &&<LogoutIcon onClick={() => {
     const confirmBox = window.confirm(
       "Do you really want to logout"
     )
