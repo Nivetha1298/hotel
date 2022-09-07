@@ -58,10 +58,10 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 exports.__esModule = true;
-exports.GoogleSignIn = exports.login = exports.register = void 0;
+exports.emailVerified = exports.GoogleSignIn = exports.login = exports.register = void 0;
 var bcrypt = require('bcryptjs');
 var User_1 = require("../models/User");
-var crypto_js_1 = require("crypto-js");
+var crypto = require('crypto');
 var error_1 = require("../utils/error");
 var jwt = require('jsonwebtoken');
 // email handler
@@ -89,16 +89,22 @@ transporter.verify(function (error, success) {
 });
 // Authentication for Register
 var register = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var salt, hash, newUser, mailOptions, error_2;
+    var existinguser, salt, hash, newUser, mailOptions, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 4, , 5]);
-                return [4 /*yield*/, bcrypt.genSaltSync(10)];
+                _a.trys.push([0, 5, , 6]);
+                return [4 /*yield*/, User_1["default"].findOne({ email: req.body.email })];
             case 1:
+                existinguser = _a.sent();
+                if (existinguser) {
+                    return [2 /*return*/, res.status(400).json({ message: "Existing user", isexist: true })];
+                }
+                return [4 /*yield*/, bcrypt.genSaltSync(10)];
+            case 2:
                 salt = _a.sent();
                 return [4 /*yield*/, bcrypt.hashSync(req.body.password, salt)];
-            case 2:
+            case 3:
                 hash = _a.sent();
                 newUser = new User_1["default"]({
                     username: req.body.username,
@@ -109,16 +115,16 @@ var register = function (req, res, next) { return __awaiter(void 0, void 0, void
                     phone: req.body.phone,
                     city: req.body.city,
                     isVerified: false,
-                    emailToken: crypto_js_1["default"].randomBytes(64).toString("hex")
+                    emailToken: crypto.randomBytes(64).toString("hex")
                 });
                 return [4 /*yield*/, newUser.save()];
-            case 3:
+            case 4:
                 _a.sent();
                 mailOptions = {
-                    from: "balajikrishna44589@gmail.com",
+                    from: "nivethakumar1298@gmail.com",
                     to: newUser.email,
                     subject: "Verify your email address",
-                    html: "<p>Hello ".concat(newUser.username, "! Welcome to funtabulous.Please Verify your email address to complete the signup process and login to your account</p>\n        \n                    <p>press here <a href=\"http://").concat(req.headers.host, "/users/verify-email?token=").concat(newUser.emailToken, "\"> here</a> to verify your mailId. </p>")
+                    html: "<p>Hello ".concat(newUser.username, "! A Message from Hotel booking!.Please Verify your email address to complete the signup process and login to your account</p>\n        \n                    <p>press here <a href=\"http://").concat(req.headers.host, "/api/auth/verify-email?token=").concat(newUser.emailToken, "\"> here</a> to verify your mailId. </p>")
                 };
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
@@ -127,12 +133,11 @@ var register = function (req, res, next) { return __awaiter(void 0, void 0, void
                     console.log("Verification Mail sent");
                     res.status(400).json({ message: "Verification Mail sent" });
                 });
-                return [3 /*break*/, 5];
-            case 4:
+                return [3 /*break*/, 6];
+            case 5:
                 error_2 = _a.sent();
-                console.log(error_2);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
@@ -211,4 +216,37 @@ var GoogleSignIn = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.GoogleSignIn = GoogleSignIn;
+var emailVerified = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var token, user, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 5, , 6]);
+                token = req.query.token;
+                return [4 /*yield*/, User_1["default"].findOne({ emailToken: token })];
+            case 1:
+                user = _a.sent();
+                if (!user) return [3 /*break*/, 3];
+                //assign value to database as verified
+                user.emailToken = null;
+                user.isVerified = true;
+                return [4 /*yield*/, user.save()];
+            case 2:
+                _a.sent();
+                //redirect to login page after verify email
+                res.redirect("http://localhost:3000/login");
+                return [3 /*break*/, 4];
+            case 3:
+                console.log("Email is not verified");
+                _a.label = 4;
+            case 4: return [3 /*break*/, 6];
+            case 5:
+                error_3 = _a.sent();
+                console.log(error_3);
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
+        }
+    });
+}); };
+exports.emailVerified = emailVerified;
 //# sourceMappingURL=auth.js.map

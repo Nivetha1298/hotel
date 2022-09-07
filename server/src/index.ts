@@ -7,6 +7,7 @@ import authRoute from "../routes/auth"
 import usersRoute from "../routes/users"
 import hotelsRoute from "../routes/hotels"
 import roomsRoute from "../routes/rooms"
+import paymentsRoute from "../routes/payment"
 var cookieParser = require('cookie-parser')
 const bodyparser = require("body-parser");
 var cors = require('cors')
@@ -39,6 +40,7 @@ app.use("/api/auth" , authRoute);
 app.use("/api/users" , usersRoute);
 app.use("/api/hotels" , hotelsRoute);
 app.use("/api/rooms" , roomsRoute);
+app.use("/api/payment"  ,  paymentsRoute)
 // Error handling using middleware
 app.use((err ,req ,res,next)=>{
     const errorStatus:any = err.status || 500 

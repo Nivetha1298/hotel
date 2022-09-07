@@ -1,9 +1,8 @@
 import * as express from "express"
-import { Request, Response } from 'express';
+
 import { createHotel, deleteHotel, gethotel, gethotelbyid, getHotelRooms, updateHotel } from "../controllers/hotel";
-import Hotel from "../models/Hotel";
-import { createError } from "../utils/error";
-import { verifyAdmin, verifyUser } from "../utils/verifyToken";
+
+import { verifyAdmin } from "../utils/verifyToken";
 // ROUTING FOR HOTELS
 const router =express.Router();
 // create,

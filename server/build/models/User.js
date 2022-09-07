@@ -35,7 +35,7 @@ var UserSchema = new mongoose_1["default"].Schema({
     isVerified: {
         type: Boolean
     },
-    emailToken: { String: String }
+    emailToken: { type: String }
 }, { timestamps: true });
 exports["default"] = mongoose_1["default"].model("User", UserSchema);
 //# sourceMappingURL=User.js.map

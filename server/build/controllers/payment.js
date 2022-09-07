@@ -36,63 +36,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var express = require("express");
-var dotenv = require("dotenv");
-var mongoose_1 = require("mongoose");
-var auth_1 = require("../routes/auth");
-var users_1 = require("../routes/users");
-var hotels_1 = require("../routes/hotels");
-var rooms_1 = require("../routes/rooms");
-var payment_1 = require("../routes/payment");
-var cookieParser = require('cookie-parser');
-var bodyparser = require("body-parser");
-var cors = require('cors');
-var app = express();
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(cors());
-dotenv.config();
-var url = process.env.MONGO;
-var connect = function () { return __awaiter(void 0, void 0, void 0, function () {
+exports.payment = void 0;
+require("dotenv").config();
+var key = process.env.STRIPE_KEY;
+var Stripe = require("stripe");
+var stripe_payment = Stripe(key);
+var payment = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var paymentsession;
     return __generator(this, function (_a) {
-        try {
-            mongoose_1["default"].connect(url);
-            console.log("connected to mongodb");
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, stripe_payment.checkout.sessions.create({
+                    items: [
+                        {
+                            price: {
+                                currency: 'inr',
+                                amount: "100"
+                            }
+                        }
+                    ],
+                    mode: 'payment',
+                    success_url: 'http://localhost:3000/register',
+                    denied: "http://localhost:3000/hotels"
+                })];
+            case 1:
+                paymentsession = _a.sent();
+                res.send({
+                    url: paymentsession.url
+                });
+                return [2 /*return*/];
         }
-        catch (error) {
-            handleError(error);
-        }
-        return [2 /*return*/];
     });
 }); };
-// to save jwt token in cookie
-app.use(cookieParser());
-// middleware to connect mongo
-app.use(express.json());
-// middleware
-app.use("/api/auth", auth_1["default"]);
-app.use("/api/users", users_1["default"]);
-app.use("/api/hotels", hotels_1["default"]);
-app.use("/api/rooms", rooms_1["default"]);
-app.use("/api/payment", payment_1["default"]);
-// Error handling using middleware
-app.use(function (err, req, res, next) {
-    var errorStatus = err.status || 500;
-    var errorMessage = err.message || "Some thing went wrong";
-    return res.status(errorStatus).json({
-        success: false,
-        status: errorStatus,
-        message: errorMessage,
-        stack: err.stack
-    });
-});
-mongoose_1["default"].connection.on("disconnected", function () {
-    console.log("mongo disconnected");
-});
-app.listen(8005, function () {
-    connect();
-    console.log(" connected backend ");
-});
-function handleError(error) {
-    throw new Error("Function not used.");
-}
-//# sourceMappingURL=index.js.map
+exports.payment = payment;
+//# sourceMappingURL=payment.js.map

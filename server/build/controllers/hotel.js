@@ -88,22 +88,25 @@ var createHotel = function (req, res, next) { return __awaiter(void 0, void 0, v
 exports.createHotel = createHotel;
 // Update a hotel
 var updateHotel = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var updateHotel_1, err_2;
+    var currentHotel, updateHotel_1, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                console.log(req.body);
-                return [4 /*yield*/, Hotel_1["default"].findByIdAndUpdate(req.params.id, { $set: req.body }, { "new": true })];
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
             case 1:
+                currentHotel = _a.sent();
+                console.log("update", currentHotel);
+                return [4 /*yield*/, Hotel_1["default"].findByIdAndUpdate(req.params.id, { $set: req.body }, { "new": true })];
+            case 2:
                 updateHotel_1 = _a.sent();
                 res.status(200).json(updateHotel_1);
-                return [3 /*break*/, 3];
-            case 2:
+                return [3 /*break*/, 4];
+            case 3:
                 err_2 = _a.sent();
                 res.status(500).json(err_2);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };

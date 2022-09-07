@@ -30,6 +30,7 @@
     "openssl": "^2.0.0",
     "random-key": "^0.3.2",
     "reflect-metadata": "^0.1.13",
+    "stripe": "^10.7.0",
     "uuid": "^8.3.2"
   },
   "scripts": {
