@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 
 import {BrowserRouter , Routes ,Route, Navigate} from "react-router-dom" ;
+import Failure from './components/Failure';
+import Paynow from './components/Paynow';
+import Success from './components/Success';
 import { AuthContext } from './context/AuthContext';
 import { userInputs } from './formSource';
 
@@ -28,6 +31,10 @@ function App() {
       <Route path="/hotels/:id" element={<Hotel/>}/>
       <Route path="/login" element={!user?<Login/>:<Navigate to="/"></Navigate>}/>
       <Route path="/register" element={<Register inputs={userInputs} title="Add New User" />}/>
+      <Route path="/success" element={<Success/>}/>
+      <Route path="/failure" element={<Failure/>}/>
+      <Route path="/payment" element={<Paynow/>}/>
+
  
     </Routes>
     </BrowserRouter>

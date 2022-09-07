@@ -1,15 +1,18 @@
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Hotel } from '@material-ui/icons'
 import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SearchContext } from '../../context/SearchContext'
 import useFetch from '../../hooks/useFetch'
+import Paynow from '../Paynow'
 import "./reserve.css"
 
 const Reserve = ({setOpenModel , hotelId}) => {
-    const [selectedRooms , setSelectedRooms] = useState([])
+    const [selectedRooms , setSelectedRooms] = useState([]);
+    const [currentRooms,setCurrentRooms] = useState([])
     let filledRooms = []
     const {dates}=useContext(SearchContext)
         const{data , loading ,error} = useFetch(`http://localhost:8005/api/hotels/room/${hotelId}`)
@@ -48,9 +51,11 @@ let list=[]
 
                 
             );
+            console.log(selectedRooms)
         };
         const   navigate = useNavigate()
         const handleClick=async()=>{
+            console.log(selectedRooms)
 console.log("reservenow");
             try{
                 await Promise.all(
@@ -62,7 +67,10 @@ console.log("reservenow");
                     return res.data
                 }));
                 setOpenModel(false);
-                navigate("/")
+                 navigate("/payment",{state:{
+                  selectedRooms,
+                  data
+                 }})
                 //isAllRoomsFilled();
 
             }  catch(err){
@@ -71,7 +79,9 @@ console.log("reservenow");
 
 
         }
+      
         console.log(selectedRooms)
+
         //Rooms filled or not
         const isAllRoomsFilled = ()=>{
             try {
@@ -140,6 +150,7 @@ console.log("reservenow");
                 ))
             ):null} 
           <button  onClick={handleClick} className="rButton" disabled={isAllRoomsFilled()}>Reserve Now!</button>
+          
         </div>
        </div>
   )
