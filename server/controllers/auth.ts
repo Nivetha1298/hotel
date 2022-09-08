@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Otp } from "../models/Otp";
 const bcrypt = require('bcryptjs');
 import User from "../models/User";
 import { userVerification } from "../models/userVerification";
@@ -233,3 +234,64 @@ export const GoogleSignIn = async (req, res) => {
     }
   
   };
+
+
+
+  export const verifyPasswordMail = async (req, res) => {
+    //Checking emailid from front-end
+  const user:any = await User.findOne({ email: req.body.email });
+
+  if (User) {
+    //generate OTP 
+    let otpCode:any = Math.floor(Math.random() * 10000 + 1);
+    //save OTP to database with expire time
+    let otpData:any = new Otp({
+      email: req.body.email,
+      code: otpCode,
+      expiresIn: new Date().getTime() + 400 * 1000,
+    });
+    await otpData.save();
+    //send OTP to mail
+    const mailOptions:any = {
+      from: "nivethakumar1298@gmail.com",
+      to: user.email,
+      subject: "verify your email",
+      html: `<p>Hello ${User.name}. Your OTP is ${otpData.code}`,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(info);
+        console.log("Verification Mail sent");
+      }
+    });
+    res.status(200).json({message:"Success"})
+  } else {
+    return res.status(400).json({message:"EmailId not yet registered "});
+  }
+};
+
+export const changePassword = async (req, res) => {
+    //Checking whether is there any OTP with that mail address
+  let data:any = await Otp.findOne({ email: req.body.email, code: req.body.code });
+
+  if (data) {
+    let currentTime = new Date().getTime();
+    let diff = data.expiresIn - currentTime;
+    //if time expires OTP will not be valid
+    if (diff < 0) {
+      return res.status(400).json("error");
+    } else {
+    //if valid new password will be save.
+      const user:any = await User.findOne({ email: req.body.email });
+      const hashedPassword = await bcrypt.hash(req.body.password, 13);
+      user.password = hashedPassword;
+      user.save();
+      console.log("Success");
+      res.status(200).json("Password Changed Successfully");
+    }
+  } else {
+    return res.status(400).json({message:"InCorrect OTP"});
+  }
+};

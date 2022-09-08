@@ -16,7 +16,7 @@ const line_items = details?.map((item)=>{
       product_data:{
         name:item.title
       },
-      unit_amount:item.price ,
+      unit_amount:item.price*100 ,
     },
     quantity :item.maxPeople ,
 
@@ -24,7 +24,7 @@ const line_items = details?.map((item)=>{
   }
 });
 
-console.log("details  : "   ,line_items  )
+// console.log("details  : "   ,line_items  )
     const
      paymentsession = await stripe_payment.checkout.sessions.create({
     

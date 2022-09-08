@@ -42,22 +42,32 @@ var key = process.env.STRIPE_KEY;
 var Stripe = require("stripe");
 var stripe_payment = Stripe(key);
 var payment = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var paymentsession;
+    var roomNumbs, details, line_items, paymentsession;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, stripe_payment.checkout.sessions.create({
-                    items: [
-                        {
-                            price: {
-                                currency: 'inr',
-                                amount: "100"
-                            }
-                        }
-                    ],
-                    mode: 'payment',
-                    success_url: 'http://localhost:3000/register',
-                    denied: "http://localhost:3000/hotels"
-                })];
+            case 0:
+                roomNumbs = req.body.roomNumbs;
+                console.log("rooms:", roomNumbs);
+                details = req.body.details;
+                console.log(req.body);
+                line_items = details === null || details === void 0 ? void 0 : details.map(function (item) {
+                    return {
+                        price_data: {
+                            currency: 'inr',
+                            product_data: {
+                                name: item.title
+                            },
+                            unit_amount: item.price * 100
+                        },
+                        quantity: item.maxPeople
+                    };
+                });
+                return [4 /*yield*/, stripe_payment.checkout.sessions.create({
+                        line_items: line_items,
+                        mode: 'payment',
+                        success_url: "http://localhost:3000/success",
+                        cancel_url: "http://localhost:3000/failure"
+                    })];
             case 1:
                 paymentsession = _a.sent();
                 res.send({
