@@ -13,16 +13,17 @@ const logout =()=>{
   localStorage.clear();
   window.location.href = '/';
 }
+console.log(user?.result?.username);
 
   return (
     <div className="navbar">
           
 
       <div className="navContainer">
-       {user ?  `${user?.result?.googleId ?user?.result?.username:user.username}`:<Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+       {user ?  `${user?.result?.phone ?user?.result?.username:user.username}`:<Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
           <span className="logo">Hotel booking</span>
         </Link>}
-        <img   className="avatar" src={user  && `${user?.result?.googleId ?user?.result?.img:user.img}`}/>
+        <img   className="avatar" src={user  && `${user?.result?.phone ?user?.result?.img:user.img}`}/>
 
 
 

@@ -7,10 +7,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SearchContext } from '../../context/SearchContext'
 import useFetch from '../../hooks/useFetch'
-import Paynow from '../Paynow'
+import Paynow from '../paynow/Paynow'
 import "./reserve.css"
 
 const Reserve = ({setOpenModel , hotelId}) => {
+    
     const [selectedRooms , setSelectedRooms] = useState([]);
     const [currentRooms,setCurrentRooms] = useState([])
     let filledRooms = []
@@ -57,6 +58,9 @@ let list=[]
         const handleClick=async()=>{
             console.log(selectedRooms)
 console.log("reservenow");
+
+
+
             try{
                 await Promise.all(
                     selectedRooms.map(async roomId=>{
@@ -66,6 +70,9 @@ console.log("reservenow");
                         });
                     return res.data
                 }));
+
+
+
                 setOpenModel(false);
                  navigate("/payment",{state:{
                   selectedRooms,
@@ -131,7 +138,7 @@ console.log("reservenow");
                            <div className="rTitle"><b>{item?.title}</b></div>
                             <div className="rDesc">{item?.desc} </div>
                             <div className="rMax">Max People:<b>{item?.maxPeople}</b></div>
-                            <div className="rPrice"><b>{item?.price}</b></div>
+                            <div className="rPrice"><b>&#8377;{item?.price}</b></div>
     
     
     

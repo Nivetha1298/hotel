@@ -125,7 +125,7 @@ const days=(dayDifference(dates[0]?.endDate , dates[0]?.startDate))
                 excellent location 
               </span>
               <h2>
-                <b>&#8377;{days * data?.cheapestPrice * options.room}</b> ({days} nights)
+                {/* <b>&#8377;{days * data?.cheapestPrice * options.room}</b> ({days} nights) */}
               </h2>
               <button   onClick={handleClick}>Reserve or Book Now!</button>
             </div>

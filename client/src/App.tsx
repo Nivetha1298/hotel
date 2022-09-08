@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 
 import {BrowserRouter , Routes ,Route, Navigate} from "react-router-dom" ;
-import Failure from './components/Failure';
-import Paynow from './components/Paynow';
-import Success from './components/Success';
+import Failure from './components/paynow/Failure';
+
+import Paynow from './components/paynow/Paynow';
+import Success from './components/paynow/Success';
+
 import { AuthContext } from './context/AuthContext';
 import { userInputs } from './formSource';
 
