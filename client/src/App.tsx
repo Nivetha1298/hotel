@@ -1,6 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import {BrowserRouter , Routes ,Route, Navigate} from "react-router-dom" ;
+import ChangePassword from './components/forget_password/ChangePassword';
+import ForgotPassword from './components/forget_password/ForgetPassword';
 import Failure from './components/paynow/Failure';
 
 import Paynow from './components/paynow/Paynow';
@@ -24,7 +26,7 @@ import Register from './pages/register/Register';
 
 function App() {
   const {user}=useContext(AuthContext)
-
+const [show,setShow] = useState()
   return (
     <BrowserRouter>
     <Routes>
@@ -37,7 +39,9 @@ function App() {
       <Route path="/failure" element={<Failure/>}/>
       <Route path="/payment" element={<Paynow/>}/>
 
- 
+      <Route path="/forget" element={<ForgotPassword show={show} setShow={setShow}/>}/>
+      <Route path="/cpass" element={<ChangePassword show={show} setShow={setShow}/>}/>
+
     </Routes>
     </BrowserRouter>
   );

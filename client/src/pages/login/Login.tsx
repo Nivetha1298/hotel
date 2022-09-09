@@ -108,7 +108,8 @@ const  clientId="727656018338-83p9tgi0c15s2vo06p9esv7t1uld72b7.apps.googleuserco
         <button   disabled ={loading} onClick={handleClick} className="lButton">  Login</button>
       <Link to ="/register" > <button   className="lButton"> Register Here</button></Link>
         {error &&   <span>{error.message}</span>}
-        
+        <Link to ="/forget" > <button   className="lButton">Forgot Password</button></Link>
+
       </div>
     </div>
   );
