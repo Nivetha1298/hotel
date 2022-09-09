@@ -241,22 +241,25 @@ export const GoogleSignIn = async (req, res) => {
     //Checking emailid from front-end
   const user:any = await User.findOne({ email: req.body.email });
 
-  if (User) {
+  if (user) {
+    const OtpUser:any = await Otp.findOne({ email: req.body.email });
+if(!OtpUser){
     //generate OTP 
     let otpCode:any = Math.floor(Math.random() * 10000 + 1);
     //save OTP to database with expire time
     let otpData:any = new Otp({
       email: req.body.email,
       code: otpCode,
-      expiresIn: new Date().getTime() + 400 * 1000,
+      expiresIn: new Date().getTime() + 300 * 1000,
     });
     await otpData.save();
     //send OTP to mail
+  
     const mailOptions:any = {
-      from: "nivethakumar1298@gmail.com",
+      from: "balajikrishna44589@gmail.com",
       to: user.email,
       subject: "verify your email",
-      html: `<p>Hello ${User.name}. Your OTP is ${otpData.code}`,
+      html: `<p>Hello ${user.username}. Your OTP is ${otpData.code}`,
     };
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
@@ -267,8 +270,35 @@ export const GoogleSignIn = async (req, res) => {
       }
     });
     res.status(200).json({message:"Success"})
+  }
+  if(OtpUser){
+     //generate OTP 
+     let otpCode:any = Math.floor(Math.random() * 10000 + 1);
+     //save OTP to database with expire time
+    OtpUser.code = otpCode
+    
+     await OtpUser.save();
+     //send OTP to mail
+   
+     const mailOptions:any = {
+       from: "balajikrishna44589@gmail.com",
+       to: user.email,
+       subject: "verify your email",
+       html: `<p>Hello ${user.username}. Your OTP is ${OtpUser.code}`,
+     };
+     transporter.sendMail(mailOptions, function (error, info) {
+       if (error) {
+         console.log(error);
+       } else {
+         console.log(info);
+         console.log("Verification Mail sent");
+       }
+     });
+     res.status(200).json({message:"Success"})
+   
+  }
   } else {
-    return res.status(400).json({message:"EmailId not yet registered "});
+    return res.status(400).json({message:"EmailId not yet registered with funtabulous"});
   }
 };
 
@@ -285,13 +315,13 @@ export const changePassword = async (req, res) => {
     } else {
     //if valid new password will be save.
       const user:any = await User.findOne({ email: req.body.email });
-      const hashedPassword = await bcrypt.hash(req.body.password, 13);
+      const hashedPassword = await bcrypt.hash(req.body.password, 12);
       user.password = hashedPassword;
       user.save();
       console.log("Success");
-      res.status(200).json("Password Changed Successfully");
+      res.status(200).json("Password Changed");
     }
   } else {
-    return res.status(400).json({message:"InCorrect OTP"});
+    return res.status(400).json({message:"Enter correct OTP"});
   }
 };

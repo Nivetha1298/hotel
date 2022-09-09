@@ -6,6 +6,8 @@ var auth_1 = require("../controllers/auth");
 var router = express.Router();
 router.post("/register", auth_1.register);
 router.get("/verify-email", auth_1.emailVerified);
+router.post("/vpm", auth_1.verifyPasswordMail);
+router.post("/changepassword", auth_1.changePassword);
 router.post("/login", auth_1.login);
 router.post("/googleLogin", auth_1.GoogleSignIn);
 exports["default"] = router;

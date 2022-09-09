@@ -58,7 +58,8 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 exports.__esModule = true;
-exports.emailVerified = exports.GoogleSignIn = exports.login = exports.register = void 0;
+exports.changePassword = exports.verifyPasswordMail = exports.emailVerified = exports.GoogleSignIn = exports.login = exports.register = void 0;
+var Otp_1 = require("../models/Otp");
 var bcrypt = require('bcryptjs');
 var User_1 = require("../models/User");
 var crypto = require('crypto');
@@ -249,4 +250,74 @@ var emailVerified = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.emailVerified = emailVerified;
+var verifyPasswordMail = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, otpCode, otpData, mailOptions;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, User_1["default"].findOne({ email: req.body.email })];
+            case 1:
+                user = _a.sent();
+                if (!User_1["default"]) return [3 /*break*/, 3];
+                otpCode = Math.floor(Math.random() * 10000 + 1);
+                otpData = new Otp_1.Otp({
+                    email: req.body.email,
+                    code: otpCode,
+                    expiresIn: new Date().getTime() + 400 * 1000
+                });
+                return [4 /*yield*/, otpData.save()];
+            case 2:
+                _a.sent();
+                mailOptions = {
+                    from: "nivethakumar1298@gmail.com",
+                    to: user.email,
+                    subject: "verify your email",
+                    html: "<p>Hello ".concat(User_1["default"].name, ". Your OTP is ").concat(otpData.code)
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    }
+                    else {
+                        console.log(info);
+                        console.log("Verification Mail sent");
+                    }
+                });
+                res.status(200).json({ message: "Success" });
+                return [3 /*break*/, 4];
+            case 3: return [2 /*return*/, res.status(400).json({ message: "EmailId not yet registered " })];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.verifyPasswordMail = verifyPasswordMail;
+var changePassword = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, currentTime, diff, user, hashedPassword;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, Otp_1.Otp.findOne({ email: req.body.email, code: req.body.code })];
+            case 1:
+                data = _a.sent();
+                if (!data) return [3 /*break*/, 6];
+                currentTime = new Date().getTime();
+                diff = data.expiresIn - currentTime;
+                if (!(diff < 0)) return [3 /*break*/, 2];
+                return [2 /*return*/, res.status(400).json("error")];
+            case 2: return [4 /*yield*/, User_1["default"].findOne({ email: req.body.email })];
+            case 3:
+                user = _a.sent();
+                return [4 /*yield*/, bcrypt.hash(req.body.password, 13)];
+            case 4:
+                hashedPassword = _a.sent();
+                user.password = hashedPassword;
+                user.save();
+                console.log("Success");
+                res.status(200).json("Password Changed Successfully");
+                _a.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6: return [2 /*return*/, res.status(400).json({ message: "InCorrect OTP" })];
+            case 7: return [2 /*return*/];
+        }
+    });
+}); };
+exports.changePassword = changePassword;
 //# sourceMappingURL=auth.js.map
