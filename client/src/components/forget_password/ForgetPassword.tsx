@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import {  Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import "./forgetpassword.css"
 
 const ForgotPassword = ({show,setShow}) => {
     const [formData,setFormData] = useState({
@@ -9,7 +10,7 @@ const ForgotPassword = ({show,setShow}) => {
     }) 
 
     const navigate = useNavigate();
-    const handleClick = () =>{
+    const handleClick = () =>{   
     }
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -23,17 +24,18 @@ const ForgotPassword = ({show,setShow}) => {
       
   }
   return (
-    <div style={{height:"100vh",backgroundColor:"rgb(163, 163, 73)"}}>
-       <Link to="/auth"> <i className="fa-solid fa-backward mt-5 backward"></i><span className='backwardText'>Back to Login Page</span></Link>
-    <div className='container w-50 position-fixed forgotPasswordBG'>
+    <div   className='fpass' >
+       <Link to="/login"> <span className='backtologin'>Back to Login Page</span></Link>
+    <div className='lContainer'>
    
         {<form onSubmit={handleSubmit} autoComplete="off">
-        <input className='form-control mb-3' type="email" name='email' placeholder='Please enter your Email Address' onChange={handleChange}/>
-        <button type="submit" className='btn btn-danger w-100 forgotPasswordSubmit'  onClick={handleClick}>Submit</button>
+        <input className="sinput" type="email" name='email' placeholder='Please enter your Email Address' onChange={handleChange}  required/>
+        <button type="submit" className="sbutton" onClick={handleClick}>Submit</button>
         </form>
       }
-     
+                                     
     </div>
+
     </div>
   )
 }

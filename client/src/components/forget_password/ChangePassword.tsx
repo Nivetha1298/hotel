@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import "./changepassword.css"
 const ChangePassword = ({show,setShow}) => {
 
   
@@ -31,18 +31,18 @@ const handleChange = (e:any) =>{
 }
 
   return (
-    <div  style={{height:"100vh",backgroundColor:"rgb(163, 163, 73)"}}>
-            <Link to="/login"> <i className="fa-solid fa-backward mt-5" >Back to Login Page</i></Link>
+    <div  className='backtopage' >
+            <Link to="/login"   > Back to Login Page</Link>
        <div>
       <form className='container' onSubmit={ChangepasswordHandle} autoComplete="off">
-        <input type="email" name='email' className='form-control mb-3'  value={show?.email} disabled 
+        <input type="email" name='email' className="einput"  value={show?.email} disabled 
       
-        placeholder='Email'/>
-          <input type="password" name="password" placeholder='Password' onChange={handleChange}/>
+        placeholder='Email'/><br></br>
+          <input type="password" name="password"  className="pinput"   placeholder='Password' onChange={handleChange}/><br></br>
                  
-          <input type="text" name="code" placeholder='OTP' onChange={handleChange}/>
+          <input type="text" name="code" placeholder='OTP'   className='oinput' onChange={handleChange}/>
           
-          <button type='submit' className='btn btn-danger d-flex align-items-center'>Change Password</button>
+          <button type='submit' className="submitb">Change Password</button>
         </form>
     </div>
     </div>

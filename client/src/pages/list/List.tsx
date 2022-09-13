@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import Navbar from '../../components/navbar/Navbar'
 import SearchItem from '../../components/searchitem/SearchItem'
-import useFetch from '../../hooks/useFetch'
+import useFetch, { api } from '../../hooks/useFetch'
 
 import "./list.css"
 
@@ -17,17 +17,21 @@ const List = () => {
   const[dates ,setDates] =useState(location.state.dates)
   const[options ,setOptions] =useState(location.state.options)
   const [openDate ,setOpenDate]= useState(false)
-  const[min,setMin]=useState(undefined);
-  const[max,setMax]=useState(undefined);
+  const[min,setMin]=useState("");
+  const[max,setMax]=useState("");
 
 
 
-  const {data ,loading ,error ,reFetch} = useFetch(`http://localhost:8005/api/hotels?city=${destination.toLowerCase()}&min=${min||0}&max=${max||9999} `)
+  const {data ,loading ,error ,reFetch} = useFetch(`http://localhost:8005/api/hotels?city=${destination.toLowerCase()}&min=${min||1}&max=${max||9999999} `)
 
  const  searchbox =()=>{
+   api.get(`api/hotels?city=${destination.toLowerCase()}&min=${min||1000}&max=${max||3000}   `).then(res =>{
+    console.log(res)
+   })
    reFetch();
   
  }
+
   
   return (
     <div> <Navbar/>
@@ -62,6 +66,7 @@ const List = () => {
               <span className= 'lsOptionText'>
                 Min price <small>per night</small>
               </span>
+
               <input type="number"    onChange={e=>setMin(e.target.value)} className="lsOptionInput" />
 
             </div>
