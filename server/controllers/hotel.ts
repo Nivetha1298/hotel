@@ -73,10 +73,18 @@ export  const gethotelbyid = async (req:Request,res:Response,next)=>{
 export  const gethotel = async (req:Request,res:Response,next)=>{
     console.log("hello");
     const { min, max, ...others } = req.query;
+    
     try {
-      const hotels = await Hotel.find({
+     if(min && max){
+        const hotels = await Hotel.find({
+            ...others,
+            cheapestPrice: { $gt: min ||1, $lt: max || 999 },
+           
+          })
+          return res.status(200).json(hotels);
+     }
+     const hotels = await Hotel.find({
         ...others,
-       
       })
       res.status(200).json(hotels);
     } catch (err) {

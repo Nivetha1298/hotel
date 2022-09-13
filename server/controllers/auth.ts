@@ -276,7 +276,7 @@ if(!OtpUser){
      let otpCode:any = Math.floor(Math.random() * 10000 + 1);
      //save OTP to database with expire time
     OtpUser.code = otpCode
-    
+    OtpUser.expiresIn = new Date().getTime() + 300 * 1000,
      await OtpUser.save();
      //send OTP to mail
    
