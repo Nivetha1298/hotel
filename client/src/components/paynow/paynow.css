@@ -74,3 +74,12 @@ body.active-modal {
     right: 10px;
     padding: 5px 7px;
 }
+table {
+    border: 2px solid rgb(76, 128, 163);
+    width: 800px;
+    height: 200px;
+  }
+    
+  th {
+    border-bottom: 1px solid black;
+  }

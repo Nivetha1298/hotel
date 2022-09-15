@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
+import Star from '../star/Star'
 import "./featuredProperties.css"
 
 const FeaturedProperties = () => {
@@ -23,10 +24,11 @@ const FeaturedProperties = () => {
               <span className="fpName">{item.name}</span>
               <span className="fpCity">{item.city}</span>
               <span className="fpPrice">Starting from &#8377;{item.cheapestPrice}</span>
-              {item.rating && <div className="fpRating">
+              <Star/>
+              {/* {item.rating && <div className="fpRating">
                 <button>{item.rating}</button>
                 <span>Excellent</span>
-              </div>}
+              </div>} */}
             </div>
           ))}
         </>

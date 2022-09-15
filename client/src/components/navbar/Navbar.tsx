@@ -14,16 +14,21 @@ const logout =()=>{
   window.location.href = '/';
 }
 console.log(user?.result?.username);
+console.log(user)
+const googleuser=user?.result?.username;
+const normaluser=user?.username;
+const googleimg = user?.result?.img   ;
+const normalimg = user?.img;
 
   return (
     <div className="navbar">
           
-
+          {/* user?.result?.phone ?user?.result?.username:user.username */}
       <div className="navContainer">
-       {user ?  `${user?.result?.phone ?user?.result?.username:user.username}`:<Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+       {user ?  `${user&& googleuser?googleuser:normaluser  }`:<Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
           <span className="logo">Hotel booking</span>
         </Link>}
-        <img   className="avatar" src={user  && `${user?.result?.phone ?user?.result?.img:user.img}`}/>
+        <img   className="avatar" src={user  && `${user&& googleimg?googleimg:normalimg  }`}/>
 
 
 

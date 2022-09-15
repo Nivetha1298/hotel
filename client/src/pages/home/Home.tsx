@@ -6,6 +6,7 @@ import Footer from '../../components/footer/Footer'
 import Header from '../../components/header/Header'
 import MailList from '../../components/mailList/MailList'
 import Navbar from '../../components/navbar/Navbar'
+import Star from '../../components/star/Star'
 import { AuthContext } from '../../context/AuthContext'
 
 import  "./home.css"
@@ -25,6 +26,7 @@ const Home = () => {
        
         <h1 className="homeTitle">Top Places</h1>
         <FeaturedProperties/>
+  
       
         <MailList/>
         

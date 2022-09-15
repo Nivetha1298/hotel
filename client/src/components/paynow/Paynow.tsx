@@ -85,6 +85,8 @@ console.log(details)
     <div >
     
     <div>
+
+
     <button onClick={()=>Handlepay()}   className="pay">Pay Now!</button></div>
    <div>
      <button    onClick={toggleModal} className="later">Paylater!</button>
