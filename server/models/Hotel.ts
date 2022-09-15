@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import UserRating from "./UserRating";
 // DATABASE FOR HOTEL
 
 const HotelSchema = new mongoose.Schema({
@@ -45,10 +46,10 @@ const HotelSchema = new mongoose.Schema({
 
        
     } ,
-    rating:{
-        type :Number ,
-        min:0 ,
-        max :5
+    review:{
+        type :[],  
+       
+
     } ,
     rooms:{
         type :[String] ,  

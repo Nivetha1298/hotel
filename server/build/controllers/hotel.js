@@ -170,7 +170,7 @@ var gethotelbyid = function (req, res, next) { return __awaiter(void 0, void 0, 
 exports.gethotelbyid = gethotelbyid;
 // get all hotels
 var gethotel = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, min, max, others, hotels, err_5;
+    var _a, min, max, others, hotels_1, hotels, err_5;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -178,17 +178,22 @@ var gethotel = function (req, res, next) { return __awaiter(void 0, void 0, void
                 _a = req.query, min = _a.min, max = _a.max, others = __rest(_a, ["min", "max"]);
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, Hotel_1["default"].find(__assign({}, others))];
+                _b.trys.push([1, 5, , 6]);
+                if (!(min && max)) return [3 /*break*/, 3];
+                return [4 /*yield*/, Hotel_1["default"].find(__assign(__assign({}, others), { cheapestPrice: { $gt: min || 1, $lt: max || 999 } }))];
             case 2:
+                hotels_1 = _b.sent();
+                return [2 /*return*/, res.status(200).json(hotels_1)];
+            case 3: return [4 /*yield*/, Hotel_1["default"].find(__assign({}, others))];
+            case 4:
                 hotels = _b.sent();
                 res.status(200).json(hotels);
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 6];
+            case 5:
                 err_5 = _b.sent();
                 next(err_5);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };

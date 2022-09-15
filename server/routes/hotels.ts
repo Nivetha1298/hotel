@@ -1,6 +1,6 @@
 import * as express from "express"
 
-import { createHotel, deleteHotel, gethotel, gethotelbyid, getHotelRooms, updateHotel } from "../controllers/hotel";
+import { createHotel, deleteHotel, gethotel, gethotelbyid, getHotelRooms, getRating, setRating, updateHotel } from "../controllers/hotel";
 
 import { verifyAdmin } from "../utils/verifyToken";
 // ROUTING FOR HOTELS
@@ -24,7 +24,9 @@ router.get("/:id" ,gethotelbyid)
 router.get("/" ,gethotel);
 // room/hotelid
 router.get("/room/:id" ,getHotelRooms )  
- 
+// rating
+router.post("/rating/:id" , setRating   ) 
+router.get("/rating/:id"  , getRating) 
 
 
 

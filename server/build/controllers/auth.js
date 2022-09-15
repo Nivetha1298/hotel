@@ -293,6 +293,7 @@ var verifyPasswordMail = function (req, res) { return __awaiter(void 0, void 0, 
                 otpCode = Math.floor(Math.random() * 10000 + 1);
                 //save OTP to database with expire time
                 OtpUser.code = otpCode;
+                OtpUser.expiresIn = new Date().getTime() + 300 * 1000;
                 return [4 /*yield*/, OtpUser.save()];
             case 5:
                 _a.sent();

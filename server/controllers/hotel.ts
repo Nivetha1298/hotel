@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import { createNoSubstitutionTemplateLiteral } from "typescript";
 import Hotel from "../models/Hotel";
+
 import Room from "../models/Room";
+import UserRating from "../models/UserRating";
+
 import { createError } from "../utils/error";
 // *********************************************   CRUD CODE    for hotel ***********************************************
 
@@ -62,6 +65,7 @@ export  const gethotelbyid = async (req:Request,res:Response,next)=>{
         const  hotel =await Hotel.findById(
             req.params.id
         );
+    
         res.status(200).json(hotel);
     }
     catch(err){
@@ -112,6 +116,39 @@ export const getHotelRooms =  async (req,res,next)=>{
 
 
 
+// rating
+
+export  const setRating = async (req:Request,res:Response,next)=>{
+    const  newRating= new UserRating(req.body)
+    try{
+        const savedRating = await newRating.save()
+        await Hotel.findByIdAndUpdate(req.params.id,  {
+            $push :{review:savedRating},
+            
+        } );
+
+        return res.status(200).json("Rating Save!!!")
+       }
+       catch(err){
+    
+        next(err);
+       }
+
+}
+
+export  const getRating = async (req:Request,res:Response,next)=>{
+    try{
+        const  rating =await UserRating.findById(
+            req.params.id
+        );
+        res.status(200).json(rating);
+       }
+       catch(err){
+    
+        next(err);
+       }
+
+}
 
 
 
