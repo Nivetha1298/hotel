@@ -24,7 +24,7 @@ import "./searchItem.css"
    <div className="siDetails">
      {item.rating && <div className="siRating">
        <span>Excellent</span>
-       <button>{item.rating}</button>
+       {/* <button>{item.rating}</button> */}
      </div>}
      <div className="siDetailTexts">
        <span className="siPrice">&#8377;{item.cheapestPrice}</span>

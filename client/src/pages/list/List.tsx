@@ -13,9 +13,9 @@ import "./list.css"
 const List = () => {
   const location:any =useLocation()
   console.log(location);
-  const[destination ,setDestination] =useState(location.state.destination)
-  const[dates ,setDates] =useState(location.state.dates)
-  const[options ,setOptions] =useState(location.state.options)
+  const[destination ,setDestination] =useState(location?.state?.destination)
+  const[dates ,setDates] =useState(location?.state?.dates)
+  const[options ,setOptions] =useState(location?.state?.options)
   const [openDate ,setOpenDate]= useState(false)
   const[min,setMin]=useState("");
   const[max,setMax]=useState("");
@@ -25,7 +25,7 @@ const List = () => {
   const {data ,loading ,error ,reFetch} = useFetch(`http://localhost:8005/api/hotels?city=${destination.toLowerCase()}&min=${min||1}&max=${max||9999999} `)
 
  const  searchbox =()=>{
-   api.get(`api/hotels?city=${destination.toLowerCase()}&min=${min||1000}&max=${max||3000}   `).then(res =>{
+   api.get(`api/hotels?city=${destination?.toLowerCase()}&min=${min||1000}&max=${max||3000}   `).then(res =>{
     console.log(res)
    })
    reFetch();
@@ -47,7 +47,7 @@ const List = () => {
           </div>
           <div className="lsItem">
             <label>Check-in Date</label>
-            <span onClick={()=>setOpenDate(!openDate)}>{`${format(dates[0].startDate , "dd/MM/yyyy")} to ${format(dates[0].endDate , "dd/MM/yyyy")}`}</span>
+            <span onClick={()=>setOpenDate(!openDate)}>{`${format(dates[0]?.startDate , "dd/MM/yyyy")} to ${format(dates[0]?.endDate , "dd/MM/yyyy")}`}</span>
           { openDate && ( <DateRange
             onChange={(item)=>setDates([item.selection])}
             ranges={dates}
