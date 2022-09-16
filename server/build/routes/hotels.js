@@ -17,5 +17,8 @@ router.get("/:id", hotel_1.gethotelbyid);
 router.get("/", hotel_1.gethotel);
 // room/hotelid
 router.get("/room/:id", hotel_1.getHotelRooms);
+// rating
+router.post("/rating/:id", hotel_1.setRating);
+router.get("/rating/:id", hotel_1.getRating);
 exports["default"] = router;
 //# sourceMappingURL=hotels.js.map

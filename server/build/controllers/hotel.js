@@ -58,9 +58,10 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 exports.__esModule = true;
-exports.getHotelRooms = exports.gethotel = exports.gethotelbyid = exports.deleteHotel = exports.updateHotel = exports.createHotel = void 0;
+exports.getRating = exports.setRating = exports.getHotelRooms = exports.gethotel = exports.gethotelbyid = exports.deleteHotel = exports.updateHotel = exports.createHotel = void 0;
 var Hotel_1 = require("../models/Hotel");
 var Room_1 = require("../models/Room");
+var UserRating_1 = require("../models/UserRating");
 // *********************************************   CRUD CODE    for hotel ***********************************************
 // Creating a hotel
 var createHotel = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
@@ -224,4 +225,52 @@ var getHotelRooms = function (req, res, next) { return __awaiter(void 0, void 0,
     });
 }); };
 exports.getHotelRooms = getHotelRooms;
+// rating
+var setRating = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var newRating, savedRating, err_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                newRating = new UserRating_1["default"](req.body);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, newRating.save()];
+            case 2:
+                savedRating = _a.sent();
+                return [4 /*yield*/, Hotel_1["default"].findByIdAndUpdate(req.params.id, {
+                        $push: { review: savedRating }
+                    })];
+            case 3:
+                _a.sent();
+                return [2 /*return*/, res.status(200).json("Rating Save!!!")];
+            case 4:
+                err_7 = _a.sent();
+                next(err_7);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.setRating = setRating;
+var getRating = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var rating, err_8;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, UserRating_1["default"].findById(req.params.id)];
+            case 1:
+                rating = _a.sent();
+                res.status(200).json(rating);
+                return [3 /*break*/, 3];
+            case 2:
+                err_8 = _a.sent();
+                next(err_8);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getRating = getRating;
 //# sourceMappingURL=hotel.js.map
