@@ -3,9 +3,9 @@ import User from "../models/User";
 import { createError } from "../utils/error"; 
 // *********************************************   CRUD CODE  for LOGIN  USERS***********************************************
 
-
+export class users{
 // UPDATING A USER
-export  const updateUser = async (req:Request,res:Response,next)=>{
+ updateUser = async (req:Request,res:Response,next)=>{
     try {
         const updatedUser = await User.findByIdAndUpdate(
           req.params.id,
@@ -19,7 +19,7 @@ export  const updateUser = async (req:Request,res:Response,next)=>{
 
 } 
 // DELETING A USER
-export  const deleteUser = async (req:Request,res:Response,next)=>{
+ deleteUser = async (req:Request,res:Response,next)=>{
     try {
         await User.findByIdAndDelete(req.params.id);
         res.status(200).json("User has been deleted.");
@@ -29,7 +29,7 @@ export  const deleteUser = async (req:Request,res:Response,next)=>{
 
 }
 // GET USER BY ID
-export  const getUserbyid = async (req:Request,res:Response,next)=>{
+ getUserbyid = async (req:Request,res:Response,next)=>{
     
     try {
         const user = await User.findById(req.params.id);
@@ -40,7 +40,7 @@ export  const getUserbyid = async (req:Request,res:Response,next)=>{
 }
 
 // GET ALL USERS
-export  const getUsers = async (req:Request,res:Response,next)=>{
+ getUsers = async (req:Request,res:Response,next)=>{
    
     try {
         const users = await User.find();
@@ -50,6 +50,7 @@ export  const getUsers = async (req:Request,res:Response,next)=>{
       }
     
     
+}
 }
 
 

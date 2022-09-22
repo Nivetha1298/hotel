@@ -3,6 +3,7 @@ import { Request, Response } from "express"
 import { CLIENT_RENEG_LIMIT } from "tls";
 import User from "../models/User";
 import  {createError}from "../utils/error"
+
 export const verifyToken = (req, res, next) => {
     const token = req.cookies.access_token;
     if (!token) {

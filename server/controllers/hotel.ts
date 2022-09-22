@@ -5,11 +5,13 @@ import Hotel from "../models/Hotel";
 import Room from "../models/Room";
 import UserRating from "../models/UserRating";
 
-import { createError } from "../utils/error";
+
 // *********************************************   CRUD CODE    for hotel ***********************************************
 
+
+export class hotel{
 // Creating a hotel
-export  const createHotel = async (req:Request,res:Response,next)=>{
+createHotel = async (req:Request,res:Response,next)=>{
     const  newHotel = new Hotel(req.body);
     try{
         const savedHotel = await newHotel.save()
@@ -24,7 +26,7 @@ export  const createHotel = async (req:Request,res:Response,next)=>{
 }
 
 // Update a hotel
-export  const updateHotel = async (req:Request,res:Response,next)=>{
+ updateHotel = async (req:Request,res:Response,next)=>{
     try{
         const currentHotel = await Hotel.findById(req.params.id)
         console.log("update",currentHotel)
@@ -41,7 +43,7 @@ export  const updateHotel = async (req:Request,res:Response,next)=>{
 
 } 
 // delete a hotel
-export  const deleteHotel = async (req:Request,res:Response,next)=>{
+ deleteHotel = async (req:Request,res:Response,next)=>{
     try{
         const currentHotel = await Hotel.findById(req.params.id)
         console.log("del",currentHotel)
@@ -59,7 +61,7 @@ export  const deleteHotel = async (req:Request,res:Response,next)=>{
 
 }
 // getting a hotel by id
-export  const gethotelbyid = async (req:Request,res:Response,next)=>{
+ gethotelbyid = async (req:Request,res:Response,next)=>{
     
     try {
         const  hotel =await Hotel.findById(
@@ -74,7 +76,7 @@ export  const gethotelbyid = async (req:Request,res:Response,next)=>{
 }
 
 // get all hotels
-export  const gethotel = async (req:Request,res:Response,next)=>{
+gethotel = async (req:Request,res:Response,next)=>{
     console.log("hello");
     const { min, max, ...others } = req.query;
     
@@ -98,7 +100,7 @@ export  const gethotel = async (req:Request,res:Response,next)=>{
 }
 
 // getrooms 
-export const getHotelRooms =  async (req,res,next)=>{
+getHotelRooms =  async (req,res,next)=>{
     try{
         const hotel = await Hotel.findById(req.params.id);
         const list = await Promise.all(
@@ -118,7 +120,7 @@ export const getHotelRooms =  async (req,res,next)=>{
 
 // rating
 
-export  const setRating = async (req:Request,res:Response,next)=>{
+ setRating = async (req:Request,res:Response,next)=>{
     const  newRating= new UserRating(req.body)
     try{
         const savedRating = await newRating.save()
@@ -136,7 +138,7 @@ export  const setRating = async (req:Request,res:Response,next)=>{
 
 }
 
-export  const getRating = async (req:Request,res:Response,next)=>{
+ getRating = async (req:Request,res:Response,next)=>{
     try{
         const  rating =await UserRating.findById(
             req.params.id
@@ -150,6 +152,6 @@ export  const getRating = async (req:Request,res:Response,next)=>{
 
 }
 
-
+}
 
 

@@ -1,6 +1,7 @@
 import * as express from "express"
-import{payment} from "../controllers/payment";
+import{pay} from "../controllers/payment";
+const Pay=new pay();
 const router =express.Router();
-router.post("/" , payment)
+router.post("/" ,Pay. payment)
 
 export default router;

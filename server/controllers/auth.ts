@@ -11,6 +11,8 @@ const nodemailer=require("nodemailer");
 //  unique string
 const {v4:uuidv4} =require("uuid"); 
 
+const { check, validationResult }
+    = require('express-validator');
 
 
 require("dotenv").config();
@@ -42,8 +44,16 @@ transporter.verify((error ,success) =>{
   }
 })
 // Authentication for Register
+export class Authentication{
+  register = async(req:Request ,res:Response,next)=>{
 
-export const  register = async(req:Request ,res:Response,next)=>{
+
+
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
     try{
 
       const existinguser= await User.findOne({email:req.body.email})
@@ -54,7 +64,7 @@ export const  register = async(req:Request ,res:Response,next)=>{
         const  salt = await bcrypt.genSaltSync(10);
         const  hash  =  await bcrypt.hashSync(req.body.password,salt)
              const  newUser = new User({
-                username :req.body.username ,
+                username:req.body.username ,
                 email :req.body.email ,
                 password:hash ,
                 isAdmin : req.body.isAdmin,
@@ -105,7 +115,7 @@ export const  register = async(req:Request ,res:Response,next)=>{
         }
 
 //Authentication for login
-export const  login = async(req:Request ,res:Response,next)=>{
+  login = async(req:Request ,res:Response,next)=>{
     try{
 
 
@@ -150,17 +160,14 @@ export const  login = async(req:Request ,res:Response,next)=>{
 
 
 
-export const GoogleSignIn = async (req, res) => {
+  GoogleSignIn = async (req:Request, res:Response) => {
 
     const { email, name, token, googleId ,imageUrl} = req.body;
   
     try {
+    
   
       const existingUser = await User.findOne({ email });
-  
-    //   if (existingUser &&existingUser.isVerified) {
-  
-    //     res.status(400).json({ message: "Email Address already exists" });
   
          if (existingUser) {
   
@@ -193,7 +200,7 @@ export const GoogleSignIn = async (req, res) => {
   
   };
 
-  export const emailVerified = async (req, res) => {
+  emailVerified = async (req, res) => {
 
 
 
@@ -237,7 +244,7 @@ export const GoogleSignIn = async (req, res) => {
 
 
 
-  export const verifyPasswordMail = async (req, res) => {
+ verifyPasswordMail = async (req, res) => {
     //Checking emailid from front-end
   const user:any = await User.findOne({ email: req.body.email });
 
@@ -256,7 +263,7 @@ if(!OtpUser){
     //send OTP to mail
   
     const mailOptions:any = {
-      from: "balajikrishna44589@gmail.com",
+      from: "nivethakumar1298@gmail.com",
       to: user.email,
       subject: "verify your email",
       html: `<p>Hello ${user.username}. Your OTP is ${otpData.code}`,
@@ -281,7 +288,7 @@ if(!OtpUser){
      //send OTP to mail
    
      const mailOptions:any = {
-       from: "balajikrishna44589@gmail.com",
+       from: "nivethakumar1298@gmail.com",
        to: user.email,
        subject: "verify your email",
        html: `<p>Hello ${user.username}. Your OTP is ${OtpUser.code}`,
@@ -302,7 +309,7 @@ if(!OtpUser){
   }
 };
 
-export const changePassword = async (req, res) => {
+changePassword = async (req, res) => {
     //Checking whether is there any OTP with that mail address
   let data:any = await Otp.findOne({ email: req.body.email, code: req.body.code });
 
@@ -324,4 +331,4 @@ export const changePassword = async (req, res) => {
   } else {
     return res.status(400).json({message:"Enter correct OTP"});
   }
-};
+}};

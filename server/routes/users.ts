@@ -1,21 +1,21 @@
 import * as express from "express"
 import { Request, Response } from 'express';
-import{ deleteUser, getUserbyid, getUsers, updateUser }from "../controllers/user"
+import{ users }from "../controllers/user"
 import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken";
-
+const  crudusers= new users();
 const router =express.Router();
 
 // ROUTING FOR USERS
  //  update
- router.put("/:id" ,updateUser);
+ router.put("/:id" ,crudusers.updateUser);
 
 //  Delete 
-router.delete("/:id" ,  deleteUser)
+router.delete("/:id" ,  crudusers.deleteUser)
 // get by id
-router.get("/:id" , getUserbyid)
+router.get("/:id" ,crudusers. getUserbyid)
 
 // get all  
-router.get("/" ,verifyAdmin ,getUsers);
+router.get("/" ,verifyAdmin ,crudusers.getUsers);
  
 
 

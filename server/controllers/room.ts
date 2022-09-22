@@ -4,10 +4,10 @@ import{createError}from "../utils/error"
 import { Request, Response } from "express";
  
 // *******************************************************************  CRUD CODE FOR ROOM******************************************************
-
+export class crudroom {
 
 // CREATING A ROOM 
-export const  createRoom  = async(req:Request   , res:Response   ,next)=>{
+  createRoom  = async(req:Request   , res:Response   ,next)=>{
     const hotelId = req.params.hotelid;
     const newRoom = new Room(req.body);
     console.log(newRoom);
@@ -28,11 +28,11 @@ export const  createRoom  = async(req:Request   , res:Response   ,next)=>{
         res.status(200).json(savedRoom);
     }   catch(err){
         next(err);
-    }
+    } 
 }
 
 // UPDATING A ROOM
-export  const updateRoom = async (req:Request,res:Response,next)=>{
+ updateRoom = async (req:Request,res:Response,next)=>{
     try{
         const updateRoom = await Room.findByIdAndUpdate(req.params.id  ,{$set:req.body} , {new:true})
         res.status(200).json(updateRoom)
@@ -46,7 +46,7 @@ export  const updateRoom = async (req:Request,res:Response,next)=>{
 } 
 
 // updating Available rooms
-export const updateRoomAvailability = async (req, res, next) => {
+updateRoomAvailability = async (req, res, next) => {
     try {
       await Room.updateOne(
         { "roomNumbers._id": req.params.id },
@@ -62,7 +62,7 @@ export const updateRoomAvailability = async (req, res, next) => {
     }
   };
 // DELETING A ROOM
-export  const deleteRoom = async (req,res,next)=>{
+ deleteRoom = async (req,res,next)=>{
   const roomId = req.params.id;
 const  hotel=await Hotel.find({
   rooms: {$in:roomId}
@@ -95,7 +95,7 @@ console.log(hotel)
 
 }
 // GET ROOM BY ID
-export  const getroombyid = async (req:Request,res:Response,next)=>{
+getroombyid = async (req:Request,res:Response,next)=>{
     
     try {
         const  room =await Room.findById(
@@ -109,7 +109,7 @@ export  const getroombyid = async (req:Request,res:Response,next)=>{
 }
 
 // GET ALL ROOMS
-export  const getroom = async (req:Request,res:Response,next)=>{
+ getroom = async (req:Request,res:Response,next)=>{
    
     try {
      const  rooms =await Room.find();
@@ -121,4 +121,5 @@ export  const getroom = async (req:Request,res:Response,next)=>{
  }
     
     
+}
 }
