@@ -26,10 +26,17 @@ const Star = () => {
     toast("Rated Successfully")
    
     }
+    
     console.log(handleClick);
     
   return (
     <div>
+
+
+
+  
+
+
 
         {
        

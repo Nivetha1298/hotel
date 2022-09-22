@@ -6,6 +6,7 @@ import CancelSharpIcon from '@mui/icons-material/CancelSharp';
 import "./paynow.css";
 import hotel from "./hotel.json"
 
+import  pay from "./pay.png";
 import Lottie from 'lottie-react'
 
 
@@ -84,43 +85,18 @@ console.log(details)
   return (
     <div >
     
-    <div>
+ 
 
 
-    <button onClick={()=>Handlepay()}   className="pay">Pay Now!</button></div>
-   <div>
-     <button    onClick={toggleModal} className="later">Paylater!</button>
-     </div>
-    
 
-
-     {modal && (
-        <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
-          {user ?  `${user?.result?.phone ?user?.result?.username:user.username}`:<Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
-          <span className="logo">Hotel booking</span>
-        </Link>}
-
-            <div   style={{width:"50%" ,marginLeft:"auto",marginRight:"auto"}   }>
-<Lottie  animationData={hotel}      />
-
+<div className="card transition">
+  <h2 className="h2">Pay Now</h2>
+  <p  className='para'>Pay for online hotel bookings by making a deposit with a credit card, or paying in full for the best rates.</p>
+  <div className="cta-container transition"><button className="cta" onClick={Handlepay}>Pay</button></div>
+  <div className="card_circle transition"></div>
 </div>
-            <p>
-            
-            You will Directly Pay in Hotel ,Thankyou!
-            </p>
-           
-        
-           <Link to={'/'}>
-            <button className="close-modal"   style={{border:"none"}}>
-            <CancelSharpIcon className="regicon"  />
-            </button></Link>
-            
-          </div>
-        </div>
-      )}
-          
+
+
     </div>
   
   )

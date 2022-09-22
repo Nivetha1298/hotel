@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import {GoogleLogin ,GoogleLogout} from 'react-google-login'
 import { AuthContext } from '../../context/AuthContext';
 import "./login.css";
+import login from "./login.json"
+import Lottie from 'lottie-react'
 import {gapi} from 'gapi-script'
 const Login = () => {
 
@@ -87,7 +89,7 @@ const  clientId="727656018338-83p9tgi0c15s2vo06p9esv7t1uld72b7.apps.googleuserco
   })
   return (
     <div className="login">
-    {  showLoginButton ?<GoogleLogin   className='google'
+    {  showLoginButton ?<GoogleLogin  className='google'
     clientId={ clientId}
     buttonText="Login"
     onSuccess={onLoginSuccess}
@@ -95,21 +97,24 @@ const  clientId="727656018338-83p9tgi0c15s2vo06p9esv7t1uld72b7.apps.googleuserco
     cookiePolicy={'single_host_origin'}
   />: loading}
 {showLogoutButton?
-<GoogleLogout    className='google'
+<GoogleLogout   
       clientId={ clientId}
       buttonText="Logout"
       onLogoutSuccess={onLogout}
     />:null  }
    
+   <Lottie  animationData={login}  style={{width:400 , position:"absolute",left:100 } } />
+
       <div className="lContainer">
         <input
           type="text" placeholder="username" id="username"onChange={handleChange} className="lInput" />
         <input type="password" placeholder="password" id="password" onChange={handleChange}  className="lInput"  />
         <button   disabled ={loading} onClick={handleClick} className="lButton">  Login</button>
-      <Link to ="/register" > <button   className="lButton"> Register Here</button></Link>
+        <div>
+      <Link to ="/register" > <button style={{width:"50%"}}  className="lButton"> Register Here</button></Link>
         {error &&   <span>{error.message}</span>}
-        <Link to ="/forget" > <button   className="lButton">Forgot Password</button></Link>
-
+        <Link to ="/forget" > <button  style={{width:"48.9%"}} className="lButton">Forgot Password</button></Link>
+        </div>
       </div>
     </div>
   );

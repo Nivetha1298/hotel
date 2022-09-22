@@ -6,8 +6,13 @@ import Header from '../../components/header/Header'
 import Navbar from '../../components/navbar/Navbar'
 import SearchItem from '../../components/searchitem/SearchItem'
 import useFetch, { api } from '../../hooks/useFetch'
+import nodata from "./nodata.json"
+import load from "./loading.json"
+
+import Lottie from 'lottie-react'
 
 import "./list.css"
+import { display } from '@mui/system'
 
 
 const List = () => {
@@ -34,8 +39,20 @@ const List = () => {
 
   
   return (
-    <div> <Navbar/>
-     <Header type="list"/> 
+    <div> 
+      <p   style={{
+            color: "blue",
+            backgroundColor: "#003580",
+            height: 15 ,
+            position:"fixed",
+           width:"100vw",
+           display: "block"
+
+        }}></p>  
+      <Navbar/>
+
+     {/* <Header type="list"/>  */}
+   
      <div className="listContainer">
         
       <div className="listWrapper">
@@ -109,11 +126,19 @@ const List = () => {
           </div>
 
         <div className="listResult">
-          {loading?"Loading":<>
-          {data&&data.map(item =>(
-          <SearchItem item={item} key={item._id} />
+          {loading?        <div   style={{width:"50%" ,marginLeft:"auto",marginRight:"auto"}   }>
+<Lottie  animationData={load}      />
+
+</div>:<>
+          {data&&data.length>0?data.map(item =>(
           
-          ))
+          <SearchItem item={item} key={item._id} />
+          )):
+            <div   style={{width:"80%" ,marginLeft:"auto",marginRight:"auto"}   }>
+            <Lottie  animationData={nodata}      />
+            
+            </div>
+          
           
           }
           </>
