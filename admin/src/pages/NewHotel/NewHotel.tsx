@@ -79,6 +79,12 @@ const navigate=useNavigate();
               }
               alt=""
             />
+
+
+
+
+
+            
           </div>
           <div className="right">
             <form>
@@ -116,25 +122,35 @@ const navigate=useNavigate();
                   <option value={true}>Yes</option>
                 </select>
               </div>
-              <div className="selectRooms">
-                <label>Rooms</label>
-                <select id="rooms" multiple onChange={handleSelect}>
-                  {loading
-                    ? "loading"
-                    : data &&
-                      data.map((room) => (
-                        <option key={room._id} value={room._id}>
-                          {room.title}
-                        </option>
-                      ))}
-                </select>
-              </div>
-
+             
 
 
               <button onClick={handleClick}>Send</button>
             </form>
           </div>
+        </div>
+
+        <div className="image_grid" style={{width:"50%", marginLeft:"55px"}}>
+          <div className="images" style={{position:"relative", display:"inline-block", padding:"10px"}}><img src={
+                files
+                  ? URL.createObjectURL(files[1])
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              } style={{width:"50px", height:"50px"}}></img>
+          </div>
+          <div className="images" style={{position:"relative", display:"inline-block", padding:"10px"}}><img src={
+                files
+                  ? URL.createObjectURL(files[2])
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              } style={{width:"50px", height:"50px"}}></img>
+          </div>
+          <div className="images" style={{position:"relative", display:"inline-block", padding:"10px"}}><img src={
+                files
+                  ? URL.createObjectURL(files[3])
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              } style={{width:"50px", height:"50px"}}></img>
+          </div>
+            
+            
         </div>
       </div>
     </div>

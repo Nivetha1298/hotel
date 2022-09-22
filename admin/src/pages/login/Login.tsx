@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import "./login.css";
+
 const Login = () => {
 
 const[ credentials  ,setCredentials]=useState({
@@ -45,6 +46,7 @@ dispatch({type:"LOGIN_FAILURE"  ,  payload:err.response.data})
   return (
     <div className="login">
       <div className="lContainer">
+  
         <input
           type="text" placeholder="username" id="username"onChange={handleChange} className="lInput" />
         <input type="password" placeholder="password" id="password" onChange={handleChange}  className="lInput"  />

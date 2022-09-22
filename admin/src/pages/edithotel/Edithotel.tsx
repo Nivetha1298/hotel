@@ -165,7 +165,7 @@ const NewHotel = () => {
             
 
 
-
+{/* 
 <div className="selectRooms">
                 <label>Rooms</label>
                 <select id="rooms" multiple onChange={handleSelect}>
@@ -178,10 +178,33 @@ const NewHotel = () => {
                         </option>
                       ))}
                 </select>
-              </div>
+              </div> */}
               <button onClick={handleClick}>Update</button>
             </form>
           </div>
+        </div>
+        
+        <div className="image_grid" style={{width:"50%", marginLeft:"55px"}}>
+          <div className="images" style={{position:"relative", display:"inline-block", padding:"10px"}}><img src={
+                files
+                  ? URL.createObjectURL(files[1])
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              } style={{width:"50px", height:"50px"}}></img>
+          </div>
+          <div className="images" style={{position:"relative", display:"inline-block", padding:"10px"}}><img src={
+                files
+                  ? URL.createObjectURL(files[2])
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              } style={{width:"50px", height:"50px"}}></img>
+          </div>
+          <div className="images" style={{position:"relative", display:"inline-block", padding:"10px"}}><img src={
+                files
+                  ? URL.createObjectURL(files[3])
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              } style={{width:"50px", height:"50px"}}></img>
+          </div>
+            
+            
         </div>
       </div>
     </div>

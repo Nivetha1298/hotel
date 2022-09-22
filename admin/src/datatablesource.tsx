@@ -52,7 +52,13 @@ export const userColumns = [
            { console.log(params,"hf")}
          {params.row && <img className="cellImg" src={params.row.photos && params.row.photos[0]|| "https://i.ibb.co/MBtjqXQ/no-avatar.gif"                                 } alt="avatar" />}
           {params?.row?.name}
+
+     
+
         </div>
+
+
+        
         );
       },
     },
