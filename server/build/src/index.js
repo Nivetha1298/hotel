@@ -39,11 +39,7 @@ exports.__esModule = true;
 var express = require("express");
 var dotenv = require("dotenv");
 var mongoose_1 = require("mongoose");
-var auth_1 = require("../routes/auth");
-var users_1 = require("../routes/users");
-var hotels_1 = require("../routes/hotels");
-var rooms_1 = require("../routes/rooms");
-var payment_1 = require("../routes/payment");
+var index_1 = require("../routes/index");
 var cookieParser = require('cookie-parser');
 var bodyparser = require("body-parser");
 var cors = require('cors');
@@ -68,12 +64,7 @@ var connect = function () { return __awaiter(void 0, void 0, void 0, function ()
 app.use(cookieParser());
 // middleware to connect mongo
 app.use(express.json());
-// middleware
-app.use("/api/auth", auth_1["default"]);
-app.use("/api/users", users_1["default"]);
-app.use("/api/hotels", hotels_1["default"]);
-app.use("/api/rooms", rooms_1["default"]);
-app.use("/api/payment", payment_1["default"]);
+app.use(index_1["default"]);
 // Error handling using middleware
 app.use(function (err, req, res, next) {
     var errorStatus = err.status || 500;
@@ -95,4 +86,6 @@ app.listen(8005, function () {
 function handleError(error) {
     throw new Error("Function not used.");
 }
+// const server=app.listen(8005)
+// export default server
 //# sourceMappingURL=index.js.map

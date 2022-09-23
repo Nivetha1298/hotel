@@ -56,14 +56,14 @@ export class Authentication{
   }
     try{
 
-      const existinguser= await User.findOne({email:req.body.email})
+      const existinguser:String= await User.findOne({email:req.body.email})
       if(existinguser){
         return res.status(400).json({message:"Existing user"   , isexist:true})
       }
                            //encrypting password
-        const  salt = await bcrypt.genSaltSync(10);
-        const  hash  =  await bcrypt.hashSync(req.body.password,salt)
-             const  newUser = new User({
+        const  salt:any = await bcrypt.genSaltSync(10);
+        const  hash:any  =  await bcrypt.hashSync(req.body.password,salt)
+             const  newUser:any = new User({
                 username:req.body.username ,
                 email :req.body.email ,
                 password:hash ,
@@ -123,7 +123,7 @@ export class Authentication{
        if(!user)
        return next(createError(404 , "User not found"));
                        //decrypting the password
- const isPasswordCorrect=await bcrypt.compare(
+ const isPasswordCorrect:any=await bcrypt.compare(
     req.body.password     ,
     user.password
  );
@@ -162,12 +162,12 @@ export class Authentication{
 
   GoogleSignIn = async (req:Request, res:Response) => {
 
-    const { email, name, token, googleId ,imageUrl} = req.body;
+    const { email, name, token, googleId ,imageUrl}:any = req.body;
   
     try {
     
   
-      const existingUser = await User.findOne({ email });
+      const existingUser:any = await User.findOne({ email });
   
          if (existingUser) {
   
@@ -177,7 +177,7 @@ export class Authentication{
   
       if (!existingUser) {
   
-        const result = await User.create({
+        const result:any = await User.create({
   
           email,
   
@@ -200,7 +200,7 @@ export class Authentication{
   
   };
 
-  emailVerified = async (req, res) => {
+  emailVerified = async (req:Request, res:Response) => {
 
 
 
@@ -208,11 +208,11 @@ export class Authentication{
   
       //getting token from mail verification
   
-      const token = req.query.token;
+      const token:any = req.query.token;
   
       //Checking if there any emailToken with token
   
-      const user = await User.findOne({ emailToken: token });
+      const user:any = await User.findOne({ emailToken: token });
   
       if (user) {
   
@@ -244,7 +244,7 @@ export class Authentication{
 
 
 
- verifyPasswordMail = async (req, res) => {
+ verifyPasswordMail = async (req:Request, res:Response) => {
     //Checking emailid from front-end
   const user:any = await User.findOne({ email: req.body.email });
 
@@ -309,7 +309,7 @@ if(!OtpUser){
   }
 };
 
-changePassword = async (req, res) => {
+changePassword = async (req:Request, res:Response) => {
     //Checking whether is there any OTP with that mail address
   let data:any = await Otp.findOne({ email: req.body.email, code: req.body.code });
 

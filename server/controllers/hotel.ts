@@ -11,10 +11,10 @@ import UserRating from "../models/UserRating";
 
 export class hotel{
 // Creating a hotel
-createHotel = async (req:Request,res:Response,next)=>{
+createHotel = async (req:Request,res:Response,next:any)=>{
     const  newHotel = new Hotel(req.body);
     try{
-        const savedHotel = await newHotel.save()
+        const savedHotel:any= await newHotel.save()
         res.status(200).json(savedHotel)
     
        }
@@ -28,10 +28,10 @@ createHotel = async (req:Request,res:Response,next)=>{
 // Update a hotel
  updateHotel = async (req:Request,res:Response,next)=>{
     try{
-        const currentHotel = await Hotel.findById(req.params.id)
+        const currentHotel:String= await Hotel.findById(req.params.id)
         console.log("update",currentHotel)
         // console.log(req.body)
-        const updateHotel = await Hotel.findByIdAndUpdate(req.params.id  ,{$set:req.body} , {new:true})
+        const updateHotel:String = await Hotel.findByIdAndUpdate(req.params.id  ,{$set:req.body} , {new:true})
         res.status(200).json(updateHotel)
 
     
@@ -45,7 +45,7 @@ createHotel = async (req:Request,res:Response,next)=>{
 // delete a hotel
  deleteHotel = async (req:Request,res:Response,next)=>{
     try{
-        const currentHotel = await Hotel.findById(req.params.id)
+        const currentHotel:any = await Hotel.findById(req.params.id)
         console.log("del",currentHotel)
         currentHotel.rooms.forEach(async(e) =>{
             await Room.findByIdAndDelete(e)
@@ -64,7 +64,7 @@ createHotel = async (req:Request,res:Response,next)=>{
  gethotelbyid = async (req:Request,res:Response,next)=>{
     
     try {
-        const  hotel =await Hotel.findById(
+        const  hotel :String=await Hotel.findById(
             req.params.id
         );
     
@@ -78,18 +78,18 @@ createHotel = async (req:Request,res:Response,next)=>{
 // get all hotels
 gethotel = async (req:Request,res:Response,next)=>{
     console.log("hello");
-    const { min, max, ...others } = req.query;
+    const { min, max, ...others }= req.query;
     
     try {
      if(min && max){
-        const hotels = await Hotel.find({
+        const hotels:any= await Hotel.find({
             ...others,
             cheapestPrice: { $gt: min ||1, $lt: max || 999 },
            
           })
           return res.status(200).json(hotels);
      }
-     const hotels = await Hotel.find({
+     const hotels :any= await Hotel.find({
         ...others,
       })
       res.status(200).json(hotels);
@@ -100,9 +100,9 @@ gethotel = async (req:Request,res:Response,next)=>{
 }
 
 // getrooms 
-getHotelRooms =  async (req,res,next)=>{
+getHotelRooms =  async (req:Request,res:Response,next:any)=>{
     try{
-        const hotel = await Hotel.findById(req.params.id);
+        const hotel:any = await Hotel.findById(req.params.id);
         const list = await Promise.all(
 
            hotel.rooms.map((room)=>{
@@ -120,10 +120,10 @@ getHotelRooms =  async (req,res,next)=>{
 
 // rating
 
- setRating = async (req:Request,res:Response,next)=>{
+ setRating = async (req:Request,res:Response,next:any)=>{
     const  newRating= new UserRating(req.body)
     try{
-        const savedRating = await newRating.save()
+        const savedRating:any = await newRating.save()
         await Hotel.findByIdAndUpdate(req.params.id,  {
             $push :{review:savedRating},
             
@@ -138,9 +138,9 @@ getHotelRooms =  async (req,res,next)=>{
 
 }
 
- getRating = async (req:Request,res:Response,next)=>{
+ getRating = async (req:Request,res:Response,next:any)=>{
     try{
-        const  rating =await UserRating.findById(
+        const  rating:string =await UserRating.findById(
             req.params.id
         );
         res.status(200).json(rating);

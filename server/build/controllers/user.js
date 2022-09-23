@@ -36,91 +36,94 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getUsers = exports.getUserbyid = exports.deleteUser = exports.updateUser = void 0;
+exports.users = void 0;
 var User_1 = require("../models/User");
 // *********************************************   CRUD CODE  for LOGIN  USERS***********************************************
-// UPDATING A USER
-var updateUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var updatedUser, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, User_1["default"].findByIdAndUpdate(req.params.id, { $set: req.body }, { "new": true })];
-            case 1:
-                updatedUser = _a.sent();
-                res.status(200).json(updatedUser);
-                return [3 /*break*/, 3];
-            case 2:
-                err_1 = _a.sent();
-                next(err_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.updateUser = updateUser;
-// DELETING A USER
-var deleteUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var err_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, User_1["default"].findByIdAndDelete(req.params.id)];
-            case 1:
-                _a.sent();
-                res.status(200).json("User has been deleted.");
-                return [3 /*break*/, 3];
-            case 2:
-                err_2 = _a.sent();
-                next(err_2);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.deleteUser = deleteUser;
-// GET USER BY ID
-var getUserbyid = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, err_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, User_1["default"].findById(req.params.id)];
-            case 1:
-                user = _a.sent();
-                res.status(200).json(user);
-                return [3 /*break*/, 3];
-            case 2:
-                err_3 = _a.sent();
-                next(err_3);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getUserbyid = getUserbyid;
-// GET ALL USERS
-var getUsers = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var users, err_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, User_1["default"].find()];
-            case 1:
-                users = _a.sent();
-                res.status(200).json(users);
-                return [3 /*break*/, 3];
-            case 2:
-                err_4 = _a.sent();
-                next(err_4);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getUsers = getUsers;
+var users = /** @class */ (function () {
+    function users() {
+        var _this = this;
+        // UPDATING A USER
+        this.updateUser = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var updatedUser, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, User_1["default"].findByIdAndUpdate(req.params.id, { $set: req.body }, { "new": true })];
+                    case 1:
+                        updatedUser = _a.sent();
+                        res.status(200).json(updatedUser);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_1 = _a.sent();
+                        next(err_1);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        // DELETING A USER
+        this.deleteUser = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, User_1["default"].findByIdAndDelete(req.params.id)];
+                    case 1:
+                        _a.sent();
+                        res.status(200).json("User has been deleted.");
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_2 = _a.sent();
+                        next(err_2);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        // GET USER BY ID
+        this.getUserbyid = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var user, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, User_1["default"].findById(req.params.id)];
+                    case 1:
+                        user = _a.sent();
+                        res.status(200).json(user);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_3 = _a.sent();
+                        next(err_3);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        // GET ALL USERS
+        this.getUsers = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var users_1, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, User_1["default"].find()];
+                    case 1:
+                        users_1 = _a.sent();
+                        res.status(200).json(users_1);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_4 = _a.sent();
+                        next(err_4);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+    }
+    return users;
+}());
+exports.users = users;
 //# sourceMappingURL=user.js.map

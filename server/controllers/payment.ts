@@ -5,9 +5,9 @@ const Stripe =require("stripe")
 const stripe_payment = Stripe(key)
 export class pay{
   payment = async(req:Request   , res:Response )=>{
-  const {roomNumbs} = req.body;
+  const {roomNumbs}:any = req.body;
   console.log("rooms:",roomNumbs)
-const{details}=req.body ;
+const{details}:any=req.body ;
 console.log(req.body)
 const line_items = details?.map((item)=>{
   return{

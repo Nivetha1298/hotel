@@ -8,12 +8,12 @@ export class crudroom {
 
 // CREATING A ROOM 
   createRoom  = async(req:Request   , res:Response   ,next)=>{
-    const hotelId = req.params.hotelid;
-    const newRoom = new Room(req.body);
+    const hotelId:String = req.params.hotelid;
+    const newRoom:any = new Room(req.body);
     console.log(newRoom);
 
     try{
-        const  savedRoom = await newRoom.save();
+        const  savedRoom:any = await newRoom.save();
     
       
         try{
@@ -34,7 +34,7 @@ export class crudroom {
 // UPDATING A ROOM
  updateRoom = async (req:Request,res:Response,next)=>{
     try{
-        const updateRoom = await Room.findByIdAndUpdate(req.params.id  ,{$set:req.body} , {new:true})
+        const updateRoom:any = await Room.findByIdAndUpdate(req.params.id  ,{$set:req.body} , {new:true})
         res.status(200).json(updateRoom)
     
        }
@@ -46,7 +46,7 @@ export class crudroom {
 } 
 
 // updating Available rooms
-updateRoomAvailability = async (req, res, next) => {
+updateRoomAvailability = async (req:Request, res:Response, next:any) => {
     try {
       await Room.updateOne(
         { "roomNumbers._id": req.params.id },
@@ -62,9 +62,9 @@ updateRoomAvailability = async (req, res, next) => {
     }
   };
 // DELETING A ROOM
- deleteRoom = async (req,res,next)=>{
-  const roomId = req.params.id;
-const  hotel=await Hotel.find({
+ deleteRoom = async (req:Request,res:Response,next:any)=>{
+  const roomId:any = req.params.id;
+const  hotel:any=await Hotel.find({
   rooms: {$in:roomId}
 }
 
@@ -95,7 +95,7 @@ console.log(hotel)
 
 }
 // GET ROOM BY ID
-getroombyid = async (req:Request,res:Response,next)=>{
+getroombyid = async (req:Request,res:Response,next:any)=>{
     
     try {
         const  room =await Room.findById(
@@ -110,6 +110,15 @@ getroombyid = async (req:Request,res:Response,next)=>{
 
 // GET ALL ROOMS
  getroom = async (req:Request,res:Response,next)=>{
+
+
+
+
+
+
+
+
+  
    
     try {
      const  rooms =await Room.find();

@@ -5,7 +5,7 @@ import User from "../models/User";
 import  {createError}from "../utils/error"
 
 export const verifyToken = (req, res, next) => {
-    const token = req.cookies.access_token;
+    const token:any = req.cookies.access_token;
     if (!token) {
       return next(createError(401, "You are not authenticated!"));
     }

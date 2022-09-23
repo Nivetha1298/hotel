@@ -3,11 +3,7 @@
 import * as express from "express"
 import  * as dotenv from "dotenv"
 import mongoose from "mongoose";
-import authRoute from "../routes/auth"
-import usersRoute from "../routes/users"
-import hotelsRoute from "../routes/hotels"
-import roomsRoute from "../routes/rooms"
-import paymentsRoute from "../routes/payment"
+import route from "../routes/index"
 var cookieParser = require('cookie-parser')
 const bodyparser = require("body-parser");
 var cors = require('cors')
@@ -34,13 +30,9 @@ app.use(cookieParser())
 // middleware to connect mongo
 app.use(express.json())
 
+app.use(route);
 
 
-app.use("/api/auth" , authRoute);
-app.use("/api/users" , usersRoute);
-app.use("/api/hotels" , hotelsRoute);
-app.use("/api/rooms" , roomsRoute);
-app.use("/api/payment"  ,  paymentsRoute)
 // Error handling using middleware
 app.use((err ,req ,res,next)=>{
     const errorStatus:any = err.status || 500 
@@ -77,3 +69,4 @@ app.listen(8005,() =>{
 function handleError(error: any) {
     throw new Error("Function not used.");
 }
+

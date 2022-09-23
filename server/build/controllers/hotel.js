@@ -58,219 +58,219 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 exports.__esModule = true;
-exports.getRating = exports.setRating = exports.getHotelRooms = exports.gethotel = exports.gethotelbyid = exports.deleteHotel = exports.updateHotel = exports.createHotel = void 0;
+exports.hotel = void 0;
 var Hotel_1 = require("../models/Hotel");
 var Room_1 = require("../models/Room");
 var UserRating_1 = require("../models/UserRating");
 // *********************************************   CRUD CODE    for hotel ***********************************************
-// Creating a hotel
-var createHotel = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var newHotel, savedHotel, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                newHotel = new Hotel_1["default"](req.body);
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, newHotel.save()];
-            case 2:
-                savedHotel = _a.sent();
-                res.status(200).json(savedHotel);
-                return [3 /*break*/, 4];
-            case 3:
-                err_1 = _a.sent();
-                next(err_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.createHotel = createHotel;
-// Update a hotel
-var updateHotel = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var currentHotel, updateHotel_1, err_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
-            case 1:
-                currentHotel = _a.sent();
-                console.log("update", currentHotel);
-                return [4 /*yield*/, Hotel_1["default"].findByIdAndUpdate(req.params.id, { $set: req.body }, { "new": true })];
-            case 2:
-                updateHotel_1 = _a.sent();
-                res.status(200).json(updateHotel_1);
-                return [3 /*break*/, 4];
-            case 3:
-                err_2 = _a.sent();
-                res.status(500).json(err_2);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.updateHotel = updateHotel;
-// delete a hotel
-var deleteHotel = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var currentHotel, err_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
-            case 1:
-                currentHotel = _a.sent();
-                console.log("del", currentHotel);
-                currentHotel.rooms.forEach(function (e) { return __awaiter(void 0, void 0, void 0, function () {
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0: return [4 /*yield*/, Room_1["default"].findByIdAndDelete(e)
-                                // console.log("rooms",e)
-                            ];
-                            case 1:
-                                _a.sent();
-                                return [2 /*return*/];
-                        }
-                    });
-                }); });
-                return [4 /*yield*/, Hotel_1["default"].findByIdAndDelete(req.params.id)];
-            case 2:
-                _a.sent();
-                return [2 /*return*/, res.status(200).json("Hotel has been deleted")];
-            case 3:
-                err_3 = _a.sent();
-                res.status(500).json(err_3);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.deleteHotel = deleteHotel;
-// getting a hotel by id
-var gethotelbyid = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var hotel, err_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
-            case 1:
-                hotel = _a.sent();
-                res.status(200).json(hotel);
-                return [3 /*break*/, 3];
-            case 2:
-                err_4 = _a.sent();
-                res.status(500).json(err_4);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.gethotelbyid = gethotelbyid;
-// get all hotels
-var gethotel = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, min, max, others, hotels_1, hotels, err_5;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                console.log("hello");
-                _a = req.query, min = _a.min, max = _a.max, others = __rest(_a, ["min", "max"]);
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 5, , 6]);
-                if (!(min && max)) return [3 /*break*/, 3];
-                return [4 /*yield*/, Hotel_1["default"].find(__assign(__assign({}, others), { cheapestPrice: { $gt: min || 1, $lt: max || 999 } }))];
-            case 2:
-                hotels_1 = _b.sent();
-                return [2 /*return*/, res.status(200).json(hotels_1)];
-            case 3: return [4 /*yield*/, Hotel_1["default"].find(__assign({}, others))];
-            case 4:
-                hotels = _b.sent();
-                res.status(200).json(hotels);
-                return [3 /*break*/, 6];
-            case 5:
-                err_5 = _b.sent();
-                next(err_5);
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
-        }
-    });
-}); };
-exports.gethotel = gethotel;
-// getrooms 
-var getHotelRooms = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var hotel, list, err_6;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
-            case 1:
-                hotel = _a.sent();
-                return [4 /*yield*/, Promise.all(hotel.rooms.map(function (room) {
-                        return Room_1["default"].findById(room);
-                    }))];
-            case 2:
-                list = _a.sent();
-                res.status(200).json(list);
-                return [3 /*break*/, 4];
-            case 3:
-                err_6 = _a.sent();
-                next(err_6);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getHotelRooms = getHotelRooms;
-// rating
-var setRating = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var newRating, savedRating, err_7;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                newRating = new UserRating_1["default"](req.body);
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, newRating.save()];
-            case 2:
-                savedRating = _a.sent();
-                return [4 /*yield*/, Hotel_1["default"].findByIdAndUpdate(req.params.id, {
-                        $push: { review: savedRating }
-                    })];
-            case 3:
-                _a.sent();
-                return [2 /*return*/, res.status(200).json("Rating Save!!!")];
-            case 4:
-                err_7 = _a.sent();
-                next(err_7);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); };
-exports.setRating = setRating;
-var getRating = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var rating, err_8;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, UserRating_1["default"].findById(req.params.id)];
-            case 1:
-                rating = _a.sent();
-                res.status(200).json(rating);
-                return [3 /*break*/, 3];
-            case 2:
-                err_8 = _a.sent();
-                next(err_8);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getRating = getRating;
+var hotel = /** @class */ (function () {
+    function hotel() {
+        var _this = this;
+        // Creating a hotel
+        this.createHotel = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var newHotel, savedHotel, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        newHotel = new Hotel_1["default"](req.body);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, newHotel.save()];
+                    case 2:
+                        savedHotel = _a.sent();
+                        res.status(200).json(savedHotel);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_1 = _a.sent();
+                        next(err_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
+        // Update a hotel
+        this.updateHotel = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var currentHotel, updateHotel, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
+                    case 1:
+                        currentHotel = _a.sent();
+                        console.log("update", currentHotel);
+                        return [4 /*yield*/, Hotel_1["default"].findByIdAndUpdate(req.params.id, { $set: req.body }, { "new": true })];
+                    case 2:
+                        updateHotel = _a.sent();
+                        res.status(200).json(updateHotel);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_2 = _a.sent();
+                        res.status(500).json(err_2);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
+        // delete a hotel
+        this.deleteHotel = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var currentHotel, err_3;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
+                    case 1:
+                        currentHotel = _a.sent();
+                        console.log("del", currentHotel);
+                        currentHotel.rooms.forEach(function (e) { return __awaiter(_this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, Room_1["default"].findByIdAndDelete(e)
+                                        // console.log("rooms",e)
+                                    ];
+                                    case 1:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); });
+                        return [4 /*yield*/, Hotel_1["default"].findByIdAndDelete(req.params.id)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/, res.status(200).json("Hotel has been deleted")];
+                    case 3:
+                        err_3 = _a.sent();
+                        res.status(500).json(err_3);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
+        // getting a hotel by id
+        this.gethotelbyid = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var hotel_1, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
+                    case 1:
+                        hotel_1 = _a.sent();
+                        res.status(200).json(hotel_1);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_4 = _a.sent();
+                        res.status(500).json(err_4);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        // get all hotels
+        this.gethotel = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var _a, min, max, others, hotels_1, hotels, err_5;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        console.log("hello");
+                        _a = req.query, min = _a.min, max = _a.max, others = __rest(_a, ["min", "max"]);
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 5, , 6]);
+                        if (!(min && max)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, Hotel_1["default"].find(__assign(__assign({}, others), { cheapestPrice: { $gt: min || 1, $lt: max || 999 } }))];
+                    case 2:
+                        hotels_1 = _b.sent();
+                        return [2 /*return*/, res.status(200).json(hotels_1)];
+                    case 3: return [4 /*yield*/, Hotel_1["default"].find(__assign({}, others))];
+                    case 4:
+                        hotels = _b.sent();
+                        res.status(200).json(hotels);
+                        return [3 /*break*/, 6];
+                    case 5:
+                        err_5 = _b.sent();
+                        next(err_5);
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
+                }
+            });
+        }); };
+        // getrooms 
+        this.getHotelRooms = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var hotel_2, list, err_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, Hotel_1["default"].findById(req.params.id)];
+                    case 1:
+                        hotel_2 = _a.sent();
+                        return [4 /*yield*/, Promise.all(hotel_2.rooms.map(function (room) {
+                                return Room_1["default"].findById(room);
+                            }))];
+                    case 2:
+                        list = _a.sent();
+                        res.status(200).json(list);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_6 = _a.sent();
+                        next(err_6);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
+        // rating
+        this.setRating = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var newRating, savedRating, err_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        newRating = new UserRating_1["default"](req.body);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, newRating.save()];
+                    case 2:
+                        savedRating = _a.sent();
+                        return [4 /*yield*/, Hotel_1["default"].findByIdAndUpdate(req.params.id, {
+                                $push: { review: savedRating }
+                            })];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/, res.status(200).json("Rating Save!!!")];
+                    case 4:
+                        err_7 = _a.sent();
+                        next(err_7);
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.getRating = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+            var rating, err_8;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, UserRating_1["default"].findById(req.params.id)];
+                    case 1:
+                        rating = _a.sent();
+                        res.status(200).json(rating);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_8 = _a.sent();
+                        next(err_8);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+    }
+    return hotel;
+}());
+exports.hotel = hotel;
 //# sourceMappingURL=hotel.js.map
