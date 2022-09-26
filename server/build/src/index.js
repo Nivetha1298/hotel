@@ -86,6 +86,4 @@ app.listen(8005, function () {
 function handleError(error) {
     throw new Error("Function not used.");
 }
-// const server=app.listen(8005)
-// export default server
 //# sourceMappingURL=index.js.map

@@ -128,9 +128,7 @@ var hotel = /** @class */ (function () {
                         currentHotel.rooms.forEach(function (e) { return __awaiter(_this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
-                                    case 0: return [4 /*yield*/, Room_1["default"].findByIdAndDelete(e)
-                                        // console.log("rooms",e)
-                                    ];
+                                    case 0: return [4 /*yield*/, Room_1["default"].findByIdAndDelete(e)];
                                     case 1:
                                         _a.sent();
                                         return [2 /*return*/];
@@ -198,7 +196,7 @@ var hotel = /** @class */ (function () {
                 }
             });
         }); };
-        // getrooms 
+        // getrooms
         this.getHotelRooms = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
             var hotel_2, list, err_6;
             return __generator(this, function (_a) {
